@@ -53,6 +53,14 @@ class SenderShell extends AppShell {
 			try {
 				$email = $this->_newEmail($configName);
 
+				/*
+				 * Added for backward compatibility, should be updated to always assume there is a 'domain'
+				 * property and that the CakeEmail::domain() method exists
+				 */
+				if(method_exists($email, 'domain') && isset($e['EmailQueue']['domain'])){
+					$email->domain($e['EmailQueue']['domain']);
+				}
+
 				if (!empty($e['EmailQueue']['from_email']) && !empty($e['EmailQueue']['from_name'])) {
 					$email->from($e['EmailQueue']['from_email'], $e['EmailQueue']['from_name']);
 				}

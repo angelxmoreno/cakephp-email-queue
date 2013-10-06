@@ -48,7 +48,8 @@ class EmailQueue extends AppModel {
 			'layout' => 'default',
 			'format' => 'both',
 			'template_vars' => $data,
-			'config' => 'default'
+			'config' => 'default',
+			'domain' => env('HTTP_HOST')
 		);
 
 		$email = $options + $defaults;
