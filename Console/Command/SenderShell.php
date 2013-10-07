@@ -58,7 +58,7 @@ class SenderShell extends AppShell {
 				}
 
 				$sent = $email
-					->to($e['EmailQueue']['to'])
+					->to($e['EmailQueue']['to'], $e['EmailQueue']['to_name'])
 					->subject($e['EmailQueue']['subject'])
 					->template($template, $layout)
 					->emailFormat($e['EmailQueue']['format'])
