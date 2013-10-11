@@ -27,7 +27,23 @@ class EmailQueue extends AppModel {
 /**
  * Stores a new email message in the queue
  *
- * @param mixed $to email or array of emails as recipients
+ * Enqueue a single email:
+ *
+ * `$this->EmailQueue->enqueue('john@example.com');`
+ *
+ * Enqueue a single email with a name:
+ *
+ * `$this->EmailQueue->enqueue(array('john@example.com' => 'John Doe'));`
+ *
+ * Enqueue multiple emails using a combination of single emails with name and single email with no name:
+ *
+ * `$this->EmailQueue->enqueue(array(
+ *	'jane@example.com',
+ *	array('john@example.com' => 'John Doe')
+ * );`
+ *
+ *
+ * @param mixed $to String with email, Array with email as key or an Array using a combination of both
  * @param array $data associative array of variables to be passed to the email template
  * @param array $options list of options for email sending. Possible keys:
  *
@@ -37,10 +53,13 @@ class EmailQueue extends AppModel {
  * - layout : the name of the layout to be used to wrap email message
  * - format: Type of template to use (html, text or both)
  * - config : the name of the email config to be used for sending
+ * - from_email : The email address which the email is to be sent from
+ * - from_name : The name used in the `from`
+ *
  *
  * @return void
  */
-	public function enqueue($to, array $data, $options = array()) {
+	public function enqueue($to, array $data = array(), $options = array()) {
 		$defaults = array(
 			'subject' => '',
 			'send_at' => gmdate('Y-m-d H:i:s'),
@@ -53,12 +72,20 @@ class EmailQueue extends AppModel {
 		);
 
 		$email = $options + $defaults;
-		if (!is_array($to)) {
-			$to = array($to);
-		}
+		$recipients = (array) $to;
+		foreach ($recipients as $to => $to_name) {
+			$email['to'] = null;
+			$email['to_name'] = null;
+			if (is_int($to) && !is_array($to_name)) {
+				$email['to'] = $to_name;
+			} elseif(is_int($to) && is_array($to_name)) {
+				$email['to'] = key($to_name);
+				$email['to_name'] = current($to_name);
+			} elseif(is_string($to) && is_string($to_name)) {
+				$email['to'] = $to;
+				$email['to_name'] = $to_name;
+			}
 
-		foreach ($to as $t) {
-			$email['to'] = $t;
 			$this->create();
 			$this->save($email);
 		}

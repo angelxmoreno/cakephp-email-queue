@@ -42,7 +42,7 @@ class PreviewShell extends AppShell {
 
 		$email = new CakeEmail($configName);
 		$email->transport('Debug')
-			->to($e['EmailQueue']['to'])
+			->to($e['EmailQueue']['to'], $e['EmailQueue']['to_name'])
 			->subject($e['EmailQueue']['subject'])
 			->template($template, $layout)
 			->emailFormat($e['EmailQueue']['format'])
