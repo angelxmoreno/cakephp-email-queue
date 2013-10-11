@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `email_queue` (
   `config` varchar(30) NOT NULL,
   `template` varchar(50) NOT NULL,
   `layout` varchar(50) NOT NULL,
+  `domain` varchar(100) DEFAULT NULL,
   `format` varchar(5) NOT NULL,
   `template_vars` text NOT NULL,
   `sent` tinyint(1) NOT NULL,
