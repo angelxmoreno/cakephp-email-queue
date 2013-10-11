@@ -71,7 +71,7 @@ class EmailQueue extends AppModel {
 		);
 
 		$email = $options + $defaults;
-		$recipients = !is_array($to) ? array($to) : $to;
+		$recipients = (array) $to;
 		foreach ($recipients as $to => $to_name) {
 			$email['to'] = null;
 			$email['to_name'] = null;
