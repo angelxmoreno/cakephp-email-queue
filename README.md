@@ -23,9 +23,11 @@ _[GIT Submodule]_
 
 In your app directory type:
 
-	git submodule add git@github.com:nodesagency/cakephp-email-queue.git app/Plugin/EmailQueue
-	git submodule init
-	git submodule update
+	git submodule add https://github.com/angelxmoreno/cakephp-email-queue.git Plugin/EmailQueue
+	cd Plugin/EmailQueue
+	git checkout simple-users
+	cd ../..
+	./Console/cake schema update --plugin=EmailQueue
 
 _[GIT Clone]_
 
