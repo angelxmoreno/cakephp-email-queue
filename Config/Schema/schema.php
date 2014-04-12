@@ -1,5 +1,5 @@
 <?php 
-class EmailQueueSchema extends CakeSchema {
+class EmailqueueSchema extends CakeSchema {
 
 	public function before($event = array()) {
 		return true;
@@ -23,7 +23,7 @@ class EmailQueueSchema extends CakeSchema {
 		'template_vars' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'sent' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'locked' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'send_tries' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 2),
+		'send_tries' => array('type' => 'integer', 'null' => false, 'default' => '3', 'length' => 2),
 		'send_at' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
